@@ -1,0 +1,12 @@
+.loading-wrappper {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	background-color: #101e27;
+	.spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

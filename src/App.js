@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import { fetchData } from "./service/service";
+import DataDisplayTable from "./components/displayDataTable";
+import LoadingScreen from "./components/loading";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(props) {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchData());
+	}, [dispatch]);
+
+	return (
+		<div className="App">
+			<div className="heading">User's Table</div>
+			{props.loading ? (
+				<LoadingScreen />
+			) : (
+				<DataDisplayTable data={props.data} />
+			)}
+		</div>
+	);
 }
 
-export default App;
+const mapStateToProps = (state) => {
+	return {
+		data: state.data,
+		loading: state.loading,
+	};
+};
+
+export default connect(mapStateToProps)(App);
